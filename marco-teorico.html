@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marco Teórico — Aulas PIE_TR@</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --azul-udg:    #003087;
+      --azul-medio:  #0052CC;
+      --azul-claro:  #E8F0FB;
+      --azul-fondo:  #F7F9FF;
+      --tinta:       #1A1A2E;
+      --tinta-suave: #4A4A6A;
+      --oro:         #C8A951;
+      --blanco:      #FFFFFF;
+      --borde:       #D0DCF0;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--azul-fondo); color: var(--tinta); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    .barra-inst { background: var(--azul-udg); color: rgba(255,255,255,0.75); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.02em; padding: 0.55rem 2rem; display: flex; align-items: center; gap: 1.5rem; }
+    .barra-inst .sep { width: 1px; height: 0.9em; background: rgba(255,255,255,0.3); }
+    nav { background: var(--blanco); border-bottom: 1px solid var(--borde); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 3.5rem; position: sticky; top: 0; z-index: 100; }
+    .nav-logo { font-family: 'Libre Baskerville', Georgia, serif; font-size: 1rem; color: var(--azul-udg); font-weight: 700; text-decoration: none; }
+    .nav-logo .guion { color: var(--oro); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.82rem; font-weight: 500; color: var(--tinta-suave); text-decoration: none; padding: 0.25rem 0; border-bottom: 1.5px solid transparent; transition: color 0.15s, border-color 0.15s; }
+    .nav-links a:hover, .nav-links a.activo { color: var(--azul-udg); border-bottom-color: var(--azul-udg); }
+    .seccion-header { background: var(--azul-udg); padding: 3.5rem 2rem 3rem; }
+    .seccion-header-inner { max-width: 860px; margin: 0 auto; }
+    .seccion-tag { font-size: 0.72rem; font-weight: 500; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; margin-bottom: 1rem; }
+    .seccion-header h1 { font-family: 'Libre Baskerville', Georgia, serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #fff; line-height: 1.1; letter-spacing: -0.02em; }
+    .seccion-header h1 em { font-style: italic; color: rgba(255,255,255,0.65); }
+    .seccion-lead { margin-top: 1.25rem; font-size: 0.95rem; color: rgba(255,255,255,0.7); max-width: 58ch; line-height: 1.65; }
+    .contenido-wrapper { max-width: 860px; margin: 0 auto; padding: 3rem 2rem 5rem; display: grid; grid-template-columns: 1fr 3fr; gap: 4rem; align-items: start; }
+    .indice { position: sticky; top: 5rem; }
+    .indice-titulo { font-size: 0.7rem; font-weight: 600; color: var(--tinta-suave); letter-spacing: 0.06em; margin-bottom: 1rem; text-transform: uppercase; }
+    .indice-lista { list-style: none; display: flex; flex-direction: column; gap: 0.1rem; }
+    .indice-lista a { display: block; font-size: 0.78rem; color: var(--tinta-suave); text-decoration: none; padding: 0.35rem 0.6rem; border-left: 2px solid var(--borde); line-height: 1.4; transition: color 0.12s, border-color 0.12s; }
+    .indice-lista a:hover { color: var(--azul-udg); border-left-color: var(--azul-udg); }
+    .indice-lista a.activo { color: var(--azul-udg); border-left-color: var(--oro); font-weight: 500; }
+    .cuerpo h2 { font-family: 'Libre Baskerville', Georgia, serif; font-size: 1.45rem; font-weight: 700; color: var(--tinta); line-height: 1.2; letter-spacing: -0.015em; margin-bottom: 1.25rem; padding-top: 5rem; scroll-margin-top: 6rem; }
+    .cuerpo h2:first-child { padding-top: 0; }
+    .cuerpo h3 { font-family: 'Libre Baskerville', Georgia, serif; font-size: 1.05rem; font-weight: 700; font-style: italic; color: var(--azul-udg); margin-top: 2rem; margin-bottom: 0.75rem; }
+    .cuerpo p { font-size: 0.94rem; line-height: 1.8; color: var(--tinta); margin-bottom: 1rem; max-width: 68ch; }
+    .cuerpo p:last-child { margin-bottom: 0; }
+    .divisor { border: none; border-top: 1px solid var(--borde); margin: 0; }
+    .caja-dato { background: var(--azul-claro); border-left: 3px solid var(--azul-udg); padding: 1.25rem 1.5rem; margin: 1.75rem 0; border-radius: 0 4px 4px 0; }
+    .caja-dato p { font-size: 0.88rem; color: var(--azul-udg); line-height: 1.65; margin: 0; max-width: none; }
+    .caja-dato strong { font-weight: 600; }
+    .tabla-wrapper { margin: 1.75rem 0; overflow-x: auto; border: 1px solid var(--borde); border-radius: 4px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    thead { background: var(--azul-udg); color: #fff; }
+    thead th { padding: 0.75rem 1rem; text-align: left; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.02em; }
+    tbody tr { border-bottom: 1px solid var(--borde); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:nth-child(even) { background: var(--azul-claro); }
+    tbody td { padding: 0.7rem 1rem; color: var(--tinta); line-height: 1.5; vertical-align: top; }
+    tbody td:first-child { font-weight: 500; color: var(--azul-udg); white-space: nowrap; }
+    .lista-estrategias { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin: 1.25rem 0; }
+    .lista-estrategias li { display: flex; gap: 0.85rem; align-items: flex-start; font-size: 0.9rem; line-height: 1.6; color: var(--tinta); }
+    .lista-estrategias li::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--oro); margin-top: 0.52em; flex-shrink: 0; }
+    .referencias { margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--borde); }
+    .referencias h4 { font-size: 0.72rem; font-weight: 600; color: var(--tinta-suave); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1rem; }
+    .referencias p { font-size: 0.75rem; color: var(--tinta-suave); line-height: 1.65; max-width: none; }
+    .referencias a { color: var(--azul-medio); text-decoration: none; }
+    .referencias a:hover { text-decoration: underline; }
+    footer { border-top: 1px solid var(--borde); padding: 2rem; max-width: 860px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-info { font-size: 0.75rem; color: var(--tinta-suave); line-height: 1.6; }
+    .footer-nav { display: flex; gap: 1.5rem; }
+    .footer-nav a { font-size: 0.75rem; color: var(--tinta-suave); text-decoration: none; transition: color 0.15s; }
+    .footer-nav a:hover { color: var(--azul-udg); }
+    @media (max-width: 700px) {
+      .barra-inst .sep, .barra-inst span:last-child { display: none; }
+      .nav-links { display: none; }
+      .contenido-wrapper { grid-template-columns: 1fr; gap: 2rem; }
+      .indice { position: static; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+    :focus-visible { outline: 2px solid var(--azul-medio); outline-offset: 3px; border-radius: 2px; }
+  </style>
+</head>
+<body>
+  <div class="barra-inst" role="banner">
+    <span>Universidad de Guadalajara</span>
+    <div class="sep" aria-hidden="true"></div>
+    <span>Sistema de Educación Media Superior</span>
+    <div class="sep" aria-hidden="true"></div>
+    <span>Preparatoria Regional de Ahualulco de Mercado</span>
+  </div>
+  <nav aria-label="Navegación principal">
+    <a href="https://jejim81.github.io/aulas-pie-tra/index.html" class="nav-logo">Aulas PIE<span class="guion">_</span>TR@</a>
+    <ul class="nav-links" role="list">
+      <li><a href="https://jejim81.github.io/aulas-pie-tra/index.html">Presentación</a></li>
+      <li><a href="https://jejim81.github.io/aulas-pie-tra/marco-teorico.html" class="activo">Marco teórico</a></li>
+      <li><a href="https://jejim81.github.io/aulas-pie-tra/investigacion.html">Investigación</a></li>
+      <li><a href="https://jejim81.github.io/aulas-pie-tra/banco-actividades.html">Diseño de actividades</a></li>
+    </ul>
+  </nav>
+  <header class="seccion-header">
+    <div class="seccion-header-inner">
+      <p class="seccion-tag">Marco teórico</p>
+      <h1>¿Por qué funciona<br><em>aprender de pie?</em></h1>
+      <p class="seccion-lead">Las Aulas PIE_TR@ se apoyan en cuatro cuerpos de conocimiento que se refuerzan mutuamente: la pedagogía de las Aulas para Pensar, la cognición corporal, la neurociencia del trabajo bípedo y el marco curricular del Bachillerato General de la Universidad de Guadalajara.</p>
+    </div>
+  </header>
+  <div class="contenido-wrapper">
+    <aside class="indice" aria-label="Contenido de esta sección">
+      <p class="indice-titulo">En esta sección</p>
+      <ul class="indice-lista">
+        <li><a href="#thinking-classroom" class="activo">Aulas para Pensar</a></li>
+        <li><a href="#cognicion-encarnada">Cognición corporal</a></li>
+        <li><a href="#neurociencia">Fundamento neurocognitivo</a></li>
+        <li><a href="#contexto-curricular">Contexto curricular</a></li>
+        <li><a href="#referencias">Referencias</a></li>
+      </ul>
+    </aside>
+    <main class="cuerpo">
+      <section aria-labelledby="thinking-classroom">
+        <h2 id="thinking-classroom">El modelo Aulas para Pensar</h2>
+        <p>Peter Liljedahl, investigador de la Simon Fraser University, documentó durante más de una década que en un aula convencional <strong>más del 70% de los estudiantes incurren sistemáticamente en hábitos de no-pensamiento</strong>: imitan sin comprender, buscan respuestas rápidas o se bloquean ante problemas no rutinarios. Su diagnóstico es que las aulas tradicionales fueron diseñadas para gestionar el comportamiento, no para producir pensamiento.</p>
+        <p>El marco de <em>Diseñando Aulas para Pensar</em> articula catorce prácticas docentes reorganizadas en fases de implementación. Dos de ellas constituyen el núcleo operativo de las Aulas PIE_TR@:</p>
+        <h3>Superficies verticales no permanentes</h3>
+        <p>Reemplazar cuadernos y mesas horizontales por pizarrones borrables colocados en las paredes genera transformaciones cognitivas, socioafectivas y fisiológicas. La borrabillidad elimina el costo psicológico del error: los estudiantes arriesgan hipótesis y prueban estrategias porque cualquier trazo equivocado desaparece en segundos. La verticalidad hace el trabajo visible para todo el grupo, propiciando circulación de ideas entre equipos y dando al docente visibilidad inmediata del avance de la clase.</p>
+        <div class="caja-dato"><p><strong>Un dato que sorprende:</strong> el tiempo que tarda un equipo en hacer el primer trazo sobre papel o cuaderno es de 3 a 5 minutos. Frente a un pizarrón vertical borrable, ese tiempo cae a 20–30 segundos. La barrera de entrada al pensamiento matemático se derrumba.</p></div>
+        <h3>Grupos visiblemente aleatorios</h3>
+        <p>Formar equipos de tres personas mediante una aleatorización pública al inicio de cada sesión rompe las jerarquías sociales y los estigmas académicos. Los estudiantes asumen que la asignación es transparente e imparcial, lo que acelera el establecimiento de dinámicas colaborativas y promueve la inclusión. La restricción de un solo marcador por equipo obliga a externalizar el razonamiento: solo se puede escribir lo que el grupo haya argumentado y acordado.</p>
+        <div class="tabla-wrapper">
+          <table>
+            <thead><tr><th>Dimensión</th><th>Aula tradicional</th><th>Aula PIE_TR@</th></tr></thead>
+            <tbody>
+              <tr><td>Postura y ubicación</td><td>Sentado, mirando al frente</td><td>De pie, frente a pizarrón vertical</td></tr>
+              <tr><td>Agrupamiento</td><td>Individual o por afinidad</td><td>Ternas aleatorias visibles, diarias</td></tr>
+              <tr><td>Presentación de tareas</td><td>Explicación magistral + hoja de ejercicios</td><td>Lanzamiento oral de un problema contexto</td></tr>
+              <tr><td>Gestión del error</td><td>El docente corrige; el error es sancionado</td><td>El equipo borra y reintenta; el error es parte del proceso</td></tr>
+              <tr><td>Síntesis final</td><td>Copia del pizarrón del docente</td><td>Notas con significado elaboradas por el propio estudiante</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <hr class="divisor">
+      <section aria-labelledby="cognicion-encarnada">
+        <h2 id="cognicion-encarnada">Cognición corporal</h2>
+        <p>La cognición corporal (<em>embodied cognition</em>) postula que las operaciones mentales de alto nivel no ocurren en un módulo cerebral abstracto y aislado, sino que emergen de la interacción bidireccional entre el sistema sensoriomotor, el cuerpo y el entorno físico.</p>
+        <p>En matemáticas, conceptos como la direccionalidad, las transformaciones geométricas, las funciones y las relaciones de equivalencia están arraigados en esquemas sensoriales primitivos. Limitar el estudio a una postura sentada sobre un plano horizontal estático restringe los gestos, movimientos y exploraciones espaciales que los estudiantes pueden desplegar para modelar problemas complejos.</p>
+        <p>Estar de pie libera los grados de libertad del cuerpo y permite un acoplamiento directo entre el espacio perceptual y la representación conceptual. Los gestos y el desplazamiento físico facilitan la externalización de la carga cognitiva hacia el entorno, aliviando la memoria de trabajo y permitiendo procesar abstracciones con menor fatiga mental.</p>
+        <div class="caja-dato"><p>Cuando los estudiantes caminan entre los pizarrones durante la consolidación de una sesión, no están simplemente "revisando el trabajo de otros": están usando el movimiento corporal para anclar comprensiones abstractas en experiencias espaciales concretas.</p></div>
+      </section>
+      <hr class="divisor">
+      <section aria-labelledby="neurociencia">
+        <h2 id="neurociencia">Fundamento neurocognitivo</h2>
+        <p>La incorporación del trabajo de pie en el aula no es una moda ergonómica. Existe un sólido cuerpo de evidencia neurocientífica que explica por qué la bipedestación activa mejora el aprendizaje.</p>
+        <h3>El eje locus coeruleus–noradrenalina</h3>
+        <p>Mantener la postura erguida es un proceso sensoriomotor dinámico que requiere microajustes constantes del sistema nervioso central. Esta actividad estimula el locus coeruleus (LC), la principal estructura noradrenérgica del cerebro. La noradrenalina liberada regula los niveles de alerta central y mejora la relación señal-ruido en la corteza cerebral.</p>
+        <p>En contraste, la sedestación prolongada induce un estado de baja activación: menor tono autonómico y mayor susceptibilidad a la somnolencia e inatención. La bipedestación mantiene al organismo en una zona de activación fisiológica óptima para el aprendizaje.</p>
+        <h3>Perfusión prefrontal y funciones ejecutivas</h3>
+        <p>Estudios con espectroscopia de infrarrojo cercano funcional (fNIRS) demuestran que la postura de pie induce un incremento significativo en la oxigenación de la corteza prefrontal (PFC) — región crítica para la planificación, la toma de decisiones y el control inhibitorio. Este ajuste perfusional genera una reserva metabólica que facilita la flexibilidad cognitiva y la actualización de la memoria de trabajo.</p>
+        <div class="caja-dato"><p>Un estudio longitudinal con estudiantes de primer año de preparatoria (Mehta et al., 2016) documentó mejoras estadísticamente significativas tras un semestre de trabajo de pie: <strong>reducción del ~14% en tiempos de procesamiento</strong>, incremento del ~13% en respuestas correctas en tareas de control ejecutivo, y mejoras sostenidas en flexibilidad cognitiva y memoria de trabajo.</p></div>
+        <h3>La combinación decisiva</h3>
+        <p>El beneficio no proviene únicamente de estar de pie. La combinación de tres factores — postura bípeda, orientación vertical de la superficie y borrabillidad — genera transformaciones conductuales que ninguno de los tres produce por separado: elimina el anonimato postural, reduce la latencia de inicio en tareas complejas y fomenta una cultura escolar orientada al ensayo, el error no penalizado y la movilidad del conocimiento.</p>
+      </section>
+      <hr class="divisor">
+      <section aria-labelledby="contexto-curricular" style="padding-top:3rem">
+        <h2 id="contexto-curricular">Contexto curricular</h2>
+        <p>Las Aulas PIE_TR@ se articulan con las transformaciones que atraviesa la educación media superior en México y en Jalisco en particular.</p>
+        <h3>El Bachillerato General de la UdeG</h3>
+        <p>El Bachillerato General de la Universidad de Guadalajara, implementado a partir de 2025 en sustitución del BGC, concibe el Pensamiento Matemático como un recurso sociocognitivo para la formación humana integral. Los programas de estudio promueven capacidades de abstracción, modelación, razonamiento intuitivo y pensamiento crítico situados en el entorno del estudiante, organizando los contenidos de forma espiralada a través de progresiones de aprendizaje que profundizan nociones aritméticas, algebraicas y variacionales mediante la resolución de problemas significativos.</p>
+        <h3>Numeracidad como competencia ciudadana</h3>
+        <p>Más allá del dominio de la aritmética formal, la numeracidad representa la capacidad funcional de interpretar, procesar y razonar con estructuras cuantitativas dentro de la sociedad. El PISA-OECD la define como la facultad para formular, emplear e interpretar la matemática en contextos reales: desde evaluar esquemas de crédito hasta analizar datos epidemiológicos o diseñar soluciones de movilidad urbana.</p>
+        <ul class="lista-estrategias" aria-label="Dominios de la numeracidad">
+          <li>Sentido numérico y estimación — órdenes de magnitud y cálculo razonado</li>
+          <li>Razonamiento proporcional y financiero — tasas, porcentajes, economía familiar</li>
+          <li>Interpretación de datos y probabilidad — lectura crítica de gráficas e información estadística</li>
+          <li>Pensamiento espacial y medición — geometría funcional y optimización</li>
+          <li>Modelación situacional — traducir problemas reales a esquemas matemáticos y viceversa</li>
+        </ul>
+        <p>Las Aulas PIE_TR@ ofrecen el andamiaje pedagógico que hace posible trabajar estos dominios de manera colaborativa, contextualizada al entorno de Ahualulco de Mercado y alineada con las progresiones de aprendizaje del SEMS-UdeG.</p>
+      </section>
+      <div class="referencias" id="referencias">
+        <h4>Referencias principales</h4>
+        <p>Liljedahl, P. (2020). <em>Building Thinking Classrooms in Mathematics.</em> Corwin Press.</p>
+        <p>Mehta, R., Shortz, A. &amp; Benden, M. (2016). Standing Up for Learning: A Pilot Investigation on the Neurocognitive Benefits of Stand-Biased School Desks. <em>International Journal of Environmental Research and Public Health, 13</em>(1), 59.</p>
+        <p>Núñez, R. &amp; Lakoff, G. (2000). <em>Where Mathematics Comes From: How the Embodied Mind Brings Mathematics into Being.</em> Basic Books.</p>
+        <p>SEMS-UdeG (2025). Programas de estudio del Bachillerato General: Conocimiento Matemático II y Precálculo. Sistema de Educación Media Superior, Universidad de Guadalajara.</p>
+        <p style="margin-top:0.5rem">Documentos de trabajo del proyecto disponibles en la carpeta <a href="https://drive.google.com/drive/folders/1RPYqnODYshyjXXicqKJyGxOhxwpwPBTE" target="_blank" rel="noopener">AulasPIE_TRA en Google Drive</a>.</p>
+      </div>
+    </main>
+  </div>
+  <footer>
+    <div class="footer-info">Preparatoria Regional de Ahualulco de Mercado<br>Sistema de Educación Media Superior · Universidad de Guadalajara</div>
+    <nav class="footer-nav" aria-label="Secciones del proyecto">
+      <a href="https://jejim81.github.io/aulas-pie-tra/index.html">Portada</a>
+      <a href="https://jejim81.github.io/aulas-pie-tra/investigacion.html">Investigación</a>
+      <a href="https://jejim81.github.io/aulas-pie-tra/banco-actividades.html">Diseño de actividades</a>
+    </nav>
+  </footer>
+  <script>
+    document.querySelectorAll('.indice-lista a').forEach(enlace => {
+      enlace.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (!href.startsWith('#')) return;
+        const destino = document.querySelector(href);
+        if (!destino) return;
+        e.preventDefault();
+        const navAltura = document.querySelector('nav').offsetHeight;
+        const barraAltura = document.querySelector('.barra-inst').offsetHeight;
+        const offset = navAltura + barraAltura + 24;
+        const top = destino.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
+    const secciones = document.querySelectorAll('.cuerpo h2[id]');
+    const enlaces = document.querySelectorAll('.indice-lista a');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          enlaces.forEach(a => a.classList.remove('activo'));
+          const enlace = document.querySelector(`.indice-lista a[href="#${entry.target.id}"]`);
+          if (enlace) enlace.classList.add('activo');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    secciones.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>

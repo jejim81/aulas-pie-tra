@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Investigación — Aulas PIE_TR@</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --azul-udg:#003087; --azul-medio:#0052CC; --azul-claro:#E8F0FB; --azul-fondo:#F7F9FF; --tinta:#1A1A2E; --tinta-suave:#4A4A6A; --oro:#C8A951; --blanco:#FFFFFF; --borde:#D0DCF0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--azul-fondo); color: var(--tinta); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    .barra-inst { background: var(--azul-udg); color: rgba(255,255,255,0.75); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.02em; padding: 0.55rem 2rem; display: flex; align-items: center; gap: 1.5rem; }
+    .barra-inst .sep { width: 1px; height: 0.9em; background: rgba(255,255,255,0.3); }
+    nav { background: var(--blanco); border-bottom: 1px solid var(--borde); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 3.5rem; position: sticky; top: 0; z-index: 100; }
+    .nav-logo { font-family: 'Libre Baskerville', Georgia, serif; font-size: 1rem; color: var(--azul-udg); font-weight: 700; text-decoration: none; }
+    .nav-logo .guion { color: var(--oro); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.82rem; font-weight: 500; color: var(--tinta-suave); text-decoration: none; padding: 0.25rem 0; border-bottom: 1.5px solid transparent; transition: color 0.15s, border-color 0.15s; }
+    .nav-links a:hover, .nav-links a.activo { color: var(--azul-udg); border-bottom-color: var(--azul-udg); }
+    .seccion-header { background: var(--azul-udg); padding: 3.5rem 2rem 3rem; }
+    .seccion-header-inner { max-width: 860px; margin: 0 auto; }
+    .seccion-tag { font-size: 0.72rem; font-weight: 500; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; margin-bottom: 1rem; }
+    .seccion-header h1 { font-family: 'Libre Baskerville', Georgia, serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #fff; line-height: 1.1; letter-spacing: -0.02em; }
+    .seccion-header h1 em { font-style: italic; color: rgba(255,255,255,0.65); }
+    .seccion-lead { margin-top: 1.25rem; font-size: 0.95rem; color: rgba(255,255,255,0.7); max-width: 58ch; line-height: 1.65; }
+    .intro { max-width: 860px; margin: 0 auto; padding: 3.5rem 2rem 0; }
+    .intro p { font-size: 1rem; line-height: 1.8; color: var(--tinta); max-width: 68ch; margin-bottom: 1rem; }
+    .proyectos-wrapper { max-width: 860px; margin: 0 auto; padding: 3rem 2rem 5rem; display: flex; flex-direction: column; gap: 2px; }
+    .proyecto { background: var(--blanco); border: 1px solid var(--borde); border-radius: 4px; overflow: hidden; }
+    .proyecto-cabeza { display: grid; grid-template-columns: 4px 1fr; cursor: pointer; user-select: none; }
+    .proyecto-cabeza:hover .proyecto-titulo-wrap { background: var(--azul-claro); }
+    .proyecto-acento { background: var(--borde); transition: background 0.2s; }
+    .proyecto.abierto .proyecto-acento { background: var(--oro); }
+    .proyecto-titulo-wrap { padding: 1.5rem 1.75rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; transition: background 0.15s; }
+    .proyecto-meta { display: flex; flex-direction: column; gap: 0.3rem; }
+    .proyecto-etiqueta { font-size: 0.7rem; font-weight: 600; color: var(--tinta-suave); letter-spacing: 0.05em; }
+    .proyecto.abierto .proyecto-etiqueta { color: var(--azul-udg); }
+    .proyecto-titulo { font-family: 'Libre Baskerville', Georgia, serif; font-size: 1.1rem; font-weight: 700; color: var(--tinta); line-height: 1.25; }
+    .proyecto.abierto .proyecto-titulo { color: var(--azul-udg); }
+    .proyecto-departamento { font-size: 0.75rem; color: var(--tinta-suave); margin-top: 0.1rem; }
+    .proyecto-toggle { width: 2rem; height: 2rem; border-radius: 50%; border: 1.5px solid var(--borde); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1rem; color: var(--tinta-suave); transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+    .proyecto.abierto .proyecto-toggle { transform: rotate(45deg); border-color: var(--azul-udg); color: var(--azul-udg); }
+    .proyecto-cuerpo { display: none; padding: 0 1.75rem 1.75rem 1.75rem; border-top: 1px solid var(--borde); }
+    .proyecto.abierto .proyecto-cuerpo { display: block; }
+    .proyecto-cuerpo p { font-size: 0.92rem; line-height: 1.75; color: var(--tinta); margin-top: 1.25rem; max-width: 64ch; }
+    .proyecto-cuerpo h3 { font-family: 'Libre Baskerville', Georgia, serif; font-size: 0.9rem; font-weight: 700; font-style: italic; color: var(--azul-udg); margin-top: 1.5rem; margin-bottom: 0.5rem; }
+    .proyecto-lista { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem; }
+    .proyecto-lista li { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.88rem; line-height: 1.6; color: var(--tinta); }
+    .proyecto-lista li::before { content: ''; display: block; width: 5px; height: 5px; border-radius: 50%; background: var(--oro); margin-top: 0.55em; flex-shrink: 0; }
+    .proyecto-lista li ul li::before { display: none; }
+    .cta-wrapper { background: var(--azul-udg); padding: 4rem 2rem; }
+    .cta-inner { max-width: 860px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: center; }
+    .cta-texto h2 { font-family: 'Libre Baskerville', Georgia, serif; font-size: 1.5rem; font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 1rem; }
+    .cta-texto p { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.7; max-width: 52ch; }
+    .cta-contacto { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; padding: 1.75rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .cta-contacto-label { font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; }
+    .cta-contacto-nombre { font-family: 'Libre Baskerville', Georgia, serif; font-size: 1rem; font-weight: 700; color: #fff; }
+    .cta-contacto-rol { font-size: 0.78rem; color: rgba(255,255,255,0.6); line-height: 1.5; }
+    .cta-contacto-email { display: inline-block; margin-top: 0.25rem; font-size: 0.82rem; font-weight: 500; color: var(--oro); text-decoration: none; border-bottom: 1px solid rgba(200,169,81,0.3); transition: border-color 0.15s; }
+    .cta-contacto-email:hover { border-color: var(--oro); }
+    footer { border-top: 1px solid var(--borde); padding: 2rem; max-width: 860px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-info { font-size: 0.75rem; color: var(--tinta-suave); line-height: 1.6; }
+    .footer-nav { display: flex; gap: 1.5rem; }
+    .footer-nav a { font-size: 0.75rem; color: var(--tinta-suave); text-decoration: none; transition: color 0.15s; }
+    .footer-nav a:hover { color: var(--azul-udg); }
+    @media (max-width: 700px) { .barra-inst .sep, .barra-inst span:last-child { display: none; } .nav-links { display: none; } .cta-inner { grid-template-columns: 1fr; } footer { flex-direction: column; align-items: flex-start; } }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+    :focus-visible { outline: 2px solid var(--azul-medio); outline-offset: 3px; border-radius: 2px; }
+  </style>
+</head>
+<body>
+  <div class="barra-inst" role="banner">
+    <span>Universidad de Guadalajara</span>
+    <div class="sep" aria-hidden="true"></div>
+    <span>Sistema de Educación Media Superior</span>
+    <div class="sep" aria-hidden="true"></div>
+    <span>Preparatoria Regional de Ahualulco de Mercado</span>
+  </div>
+  <nav aria-label="Navegación principal">
+    <a href="https://jejim81.github.io/aulas-pie-tra/index.html" class="nav-logo">Aulas PIE<span class="guion">_</span>TR@</a>
+    <ul class="nav-links" role="list">
+      <li><a href="https://jejim81.github.io/aulas-pie-tra/index.html">Presentación</a></li>
+      <li><a href="https://jejim81.github.io/aulas-pie-tra/marco-teorico.html">Marco teórico</a></li>
+      <li><a href="https://jejim81.github.io/aulas-pie-tra/investigacion.html" class="activo">Investigación</a></li>
+      <li><a href="https://jejim81.github.io/aulas-pie-tra/banco-actividades.html">Diseño de actividades</a></li>
+    </ul>
+  </nav>
+  <header class="seccion-header">
+    <div class="seccion-header-inner">
+      <p class="seccion-tag">Investigación</p>
+      <h1>Su aula como<br><em>espacio de investigación</em></h1>
+      <p class="seccion-lead">Las Aulas PIE_TR@ no son un modelo que se importa y se aplica. Es un proyecto que crece desde adentro — y necesita la mirada de quienes están en el aula todos los días.</p>
+    </div>
+  </header>
+  <div class="intro">
+    <p>El semestre piloto 2026-A demostró que la metodología funciona. Pero las preguntas más interesantes están apenas abriéndose: ¿qué está pasando en el cerebro de los estudiantes? ¿Se refleja en su desempeño? ¿Qué viven los docentes que la implementan?</p>
+    <p>Para responderlas, estamos formando tres equipos de investigación. Cada uno aborda el proyecto desde un ángulo distinto y está pensado para docentes con perfiles e intereses diferentes. Participar significa diseñar instrumentos, construir protocolos y publicar resultados en equipo.</p>
+  </div>
+  <div class="proyectos-wrapper" role="list">
+    <article class="proyecto abierto" role="listitem">
+      <div class="proyecto-cabeza" role="button" tabindex="0" aria-expanded="true" onclick="toggleProyecto(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleProyecto(this)">
+        <div class="proyecto-acento" aria-hidden="true"></div>
+        <div class="proyecto-titulo-wrap">
+          <div class="proyecto-meta">
+            <span class="proyecto-etiqueta">Proyecto 1</span>
+            <span class="proyecto-titulo">Aspectos neurocognitivos del aprendizaje de pie</span>
+            <span class="proyecto-departamento">Orientado al Departamento de Ciencias Sociales y Humanidades</span>
+          </div>
+          <div class="proyecto-toggle" aria-hidden="true">+</div>
+        </div>
+      </div>
+      <div class="proyecto-cuerpo">
+        <p>¿Qué le ocurre al cerebro de un adolescente que trabaja de pie, en equipo, frente a un pizarrón vertical? Este proyecto busca documentar los cambios en atención, memoria de trabajo y función ejecutiva a través de instrumentos accesibles al contexto del bachillerato.</p>
+        <h3>¿Qué haría el equipo?</h3>
+        <ul class="proyecto-lista">
+          <li style="flex-wrap:wrap;"><span>Diseñar y aplicar instrumentos de evaluación neurocognitiva en el aula:</span>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:0.35rem;margin-top:0.5rem;padding-left:1.25rem;border-left:2px solid var(--borde);width:100%;">
+              <li style="font-size:0.84rem;color:var(--tinta-suave);line-height:1.5;display:block;">Test de Clasificación de Tarjetas de Wisconsin — flexibilidad cognitiva</li>
+              <li style="font-size:0.84rem;color:var(--tinta-suave);line-height:1.5;display:block;">Test del Trazo — velocidad de procesamiento y atención sostenida</li>
+              <li style="font-size:0.84rem;color:var(--tinta-suave);line-height:1.5;display:block;">Tarea de Flancos de Eriksen — control inhibitorio</li>
+              <li style="font-size:0.84rem;color:var(--tinta-suave);line-height:1.5;display:block;">Prueba de Amplitud de Memoria — memoria de trabajo</li>
+            </ul>
+          </li>
+          <li>Adaptar escalas de percepción sobre motivación y compromiso cognitivo</li>
+          <li>Analizar los resultados y redactar un artículo de investigación en equipo</li>
+        </ul>
+        <h3>¿A quién va dirigido?</h3>
+        <p>A docentes interesados en la psicología del aprendizaje, la neuroeducación o el bienestar estudiantil — sin necesidad de formación técnica en neurociencia. La curiosidad por entender cómo aprenden los estudiantes es el punto de partida.</p>
+      </div>
+    </article>
+    <article class="proyecto" role="listitem">
+      <div class="proyecto-cabeza" role="button" tabindex="0" aria-expanded="false" onclick="toggleProyecto(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleProyecto(this)">
+        <div class="proyecto-acento" aria-hidden="true"></div>
+        <div class="proyecto-titulo-wrap">
+          <div class="proyecto-meta">
+            <span class="proyecto-etiqueta">Proyecto 2</span>
+            <span class="proyecto-titulo">Evidencias de aprovechamiento curricular</span>
+            <span class="proyecto-departamento">Orientado al Departamento de Matemáticas</span>
+          </div>
+          <div class="proyecto-toggle" aria-hidden="true">+</div>
+        </div>
+      </div>
+      <div class="proyecto-cuerpo">
+        <p>¿Mejoran los resultados académicos cuando los estudiantes trabajan con la metodología de Aulas para Pensar? Este proyecto compara el desempeño en los contenidos del Bachillerato General antes y después de la implementación, y analiza qué tipos de problemas generan mayor participación y comprensión.</p>
+        <h3>¿Qué haría el equipo?</h3>
+        <ul class="proyecto-lista">
+          <li style="flex-wrap:wrap;"><span>Diseñar y aplicar instrumentos de evaluación del desempeño matemático:</span>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:0.35rem;margin-top:0.5rem;padding-left:1.25rem;border-left:2px solid var(--borde);width:100%;">
+              <li style="font-size:0.84rem;color:var(--tinta-suave);line-height:1.5;display:block;">Reactivos tipo PISA — razonamiento matemático en contextos reales</li>
+              <li style="font-size:0.84rem;color:var(--tinta-suave);line-height:1.5;display:block;">Rúbricas de evaluación del trabajo visible en pizarrones</li>
+              <li style="font-size:0.84rem;color:var(--tinta-suave);line-height:1.5;display:block;">Protocolo de observación sistemática del aula</li>
+              <li style="font-size:0.84rem;color:var(--tinta-suave);line-height:1.5;display:block;">Encuesta de percepción estudiantil — confianza matemática y aprendizaje percibido</li>
+            </ul>
+          </li>
+          <li>Identificar qué tareas matemáticas generan mayor pensamiento visible en el aula</li>
+          <li>Publicar los hallazgos en equipo en una revista de educación matemática</li>
+        </ul>
+        <h3>¿A quién va dirigido?</h3>
+        <p>A docentes de matemáticas que ya aplican o quieren aplicar la metodología en sus grupos, y que están interesados en documentar lo que ven con rigor. El conocimiento del programa de estudios es la principal herramienta que se necesita.</p>
+      </div>
+    </article>
+    <article class="proyecto" role="listitem">
+      <div class="proyecto-cabeza" role="button" tabindex="0" aria-expanded="false" onclick="toggleProyecto(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleProyecto(this)">
+        <div class="proyecto-acento" aria-hidden="true"></div>
+        <div class="proyecto-titulo-wrap">
+          <div class="proyecto-meta">
+            <span class="proyecto-etiqueta">Proyecto 3</span>
+            <span class="proyecto-titulo">Experiencias docentes en la implementación</span>
+            <span class="proyecto-departamento">Abierto a todos los departamentos</span>
+          </div>
+          <div class="proyecto-toggle" aria-hidden="true">+</div>
+        </div>
+      </div>
+      <div class="proyecto-cuerpo">
+        <p>Implementar una metodología nueva no es solo cuestión de técnica — es también una experiencia personal. ¿Qué sienten los docentes al cambiar su rol? ¿Qué funciona y qué no en Ahualulco? Este proyecto recoge esas experiencias para construir un relato situado de la implementación, útil para otros docentes y para la comunidad educativa regional.</p>
+        <h3>¿Qué haría el equipo?</h3>
+        <ul class="proyecto-lista">
+          <li>Llevar una bitácora reflexiva sobre la propia práctica docente durante la implementación</li>
+          <li>Participar en entrevistas o grupos de conversación con otros docentes del equipo</li>
+          <li>Co-construir un análisis cualitativo de las experiencias recogidas</li>
+          <li>Publicar los resultados como coautores en un artículo de investigación educativa</li>
+        </ul>
+        <h3>¿A quién va dirigido?</h3>
+        <p>A cualquier docente de la preparatoria que quiera reflexionar sobre su propia práctica y dejar registro de lo que vive en el aula. No se requiere formación en investigación — el equipo acompaña el proceso metodológico.</p>
+      </div>
+    </article>
+  </div>
+  <div class="cta-wrapper">
+    <div class="cta-inner">
+      <div class="cta-texto">
+        <h2>¿Te interesa participar?</h2>
+        <p>Los equipos están en formación. Si alguno de estos proyectos te genera curiosidad — aunque sea parcial — escríbenos. No hace falta tener experiencia previa en investigación: la acompañamos desde el principio.</p>
+      </div>
+      <div class="cta-contacto">
+        <span class="cta-contacto-label">Contacto</span>
+        <span class="cta-contacto-nombre">Arturo Jiménez</span>
+        <span class="cta-contacto-rol">Dirección de proyecto</span>
+        <a href="mailto:jesus.jimenez@academicos.udg.mx" class="cta-contacto-email">jesus.jimenez@academicos.udg.mx</a>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-info">Preparatoria Regional de Ahualulco de Mercado<br>Sistema de Educación Media Superior · Universidad de Guadalajara</div>
+    <nav class="footer-nav" aria-label="Secciones del proyecto">
+      <a href="https://jejim81.github.io/aulas-pie-tra/index.html">Portada</a>
+      <a href="https://jejim81.github.io/aulas-pie-tra/marco-teorico.html">Marco teórico</a>
+      <a href="https://jejim81.github.io/aulas-pie-tra/banco-actividades.html">Diseño de actividades</a>
+    </nav>
+  </footer>
+  <script>
+    function toggleProyecto(cabeza) {
+      const proyecto = cabeza.closest('.proyecto');
+      const abierto = proyecto.classList.contains('abierto');
+      proyecto.classList.toggle('abierto', !abierto);
+      cabeza.setAttribute('aria-expanded', String(!abierto));
+    }
+  </script>
+</body>
+</html>
